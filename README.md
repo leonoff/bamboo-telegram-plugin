@@ -6,14 +6,12 @@ A simple notification plugin that allows using a Telegram messenger as Notificat
 Installation
 ---------
 * Setup [Atlassian SDK](https://developer.atlassian.com/docs/getting-started/set-up-the-atlassian-plugin-sdk-and-build-a-project)
-
 * Build plugin
 ```
 $ git clone git@github.com:leonoff/bamboo-telegram-plugin.git
 $ cd bamboo-telegram-plugin
 $ atlas-package
 ```
-
 * [Install plugin](https://confluence.atlassian.com/display/UPM/Installing+add-ons) into Bamboo
 * Setup Notifications for Build
   * Event: *All Builds Completed*
