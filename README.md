@@ -9,8 +9,8 @@ Installation
 
 * Build plugin
 ```
-$ git clone myrepo
-$ cd mydir
+$ git clone git@github.com:leonoff/bamboo-telegram-plugin.git
+$ cd bamboo-telegram-plugin
 $ atlas-package
 ```
 
