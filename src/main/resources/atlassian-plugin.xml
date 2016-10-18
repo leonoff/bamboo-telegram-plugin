@@ -1,0 +1,16 @@
+<atlassian-plugin key="${atlassian.plugin.key}" name="${project.name}" plugins-version="2">
+    <plugin-info>
+        <description>${project.description}</description>
+        <version>${project.version}</version>
+        <param name="atlassian-data-center-compatible">true</param>
+    </plugin-info>
+
+    <!-- add our i18n resource -->
+    <resource type="i18n" name="i18n" location="bamboo-telegram-plugin"/>
+
+    <notificationRecipient key="recipient.telegram" name="Telegram Recipient" class="com.atlassian.bamboo.telegram.TelegramNotificationRecipient" weight="10">
+      <description>Telegram</description>
+      <resource type="freemarker" name="view" location="telegramViewNotification.ftl"/>
+      <resource type="freemarker" name="edit" location="telegramEditNotification.ftl"/>
+    </notificationRecipient>
+</atlassian-plugin>

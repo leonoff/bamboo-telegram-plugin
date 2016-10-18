@@ -1,0 +1,1 @@
+<span class="notificationRecipientType">([@ww.text name="telegram.view"/])</span>
