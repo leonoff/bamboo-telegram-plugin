@@ -2,6 +2,5 @@
     <plugin-info>
         <description>${project.description}</description>
         <version>${project.version}</version>
-        <vendor name="${project.organization.name}" url="${project.organization.url}" />
     </plugin-info>
 </atlassian-plugin>
