@@ -8,7 +8,7 @@
     <!-- add our i18n resource -->
     <resource type="i18n" name="i18n" location="bamboo-telegram-plugin"/>
 
-    <notificationRecipient key="recipient.telegram" name="Telegram Recipient" class="com.atlassian.bamboo.telegram.TelegramNotificationRecipient" weight="10">
+    <notificationRecipient key="recipient.telegram" name="Telegram Recipient" class="com.leonoff.bamboo.telegram.TelegramNotificationRecipient" weight="10">
       <description>Telegram</description>
       <resource type="freemarker" name="view" location="telegramViewNotification.ftl"/>
       <resource type="freemarker" name="edit" location="telegramEditNotification.ftl"/>
