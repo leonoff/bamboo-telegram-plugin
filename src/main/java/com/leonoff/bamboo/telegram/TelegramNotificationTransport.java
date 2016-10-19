@@ -1,4 +1,4 @@
-package com.atlassian.bamboo.telegram;
+package com.leonoff.bamboo.telegram;
 
 import com.atlassian.bamboo.author.Author;
 import com.atlassian.bamboo.deployments.results.DeploymentResult;
