@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.leonoff.bamboo.plugins</groupId>
@@ -10,11 +11,13 @@
     <scm>
         <developerConnection>scm:git:git@github.com:leonoff/bamboo-telegram-plugin.git</developerConnection>
         <url>https://github.com/leonoff</url>
-      <tag>1.0.0</tag>
-  </scm>
+        <tag>1.0.0</tag>
+    </scm>
 
     <name>bamboo-telegram-plugin</name>
-    <description>A simple notification plugin that allows using a Telegram messenger as Notification Recipient.</description>
+    <description>
+        A simple notification plugin that allows using a Telegram messenger as Notification Recipient.
+    </description>
     <packaging>atlassian-plugin</packaging>
 
     <properties>
@@ -29,6 +32,7 @@
     </properties>
 
     <dependencyManagement>
+
         <dependencies>
             <dependency>
                 <groupId>com.atlassian.platform</groupId>
