@@ -19,8 +19,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 
-public class TelegramNotificationTransport implements NotificationTransport
-{
+public class TelegramNotificationTransport implements NotificationTransport {
     private static final Logger log = Logger.getLogger(TelegramNotificationTransport.class);
 
     private final String botToken;
@@ -35,11 +34,10 @@ public class TelegramNotificationTransport implements NotificationTransport
     private final DeploymentResult deploymentResult;
 
     public TelegramNotificationTransport(String botToken,
-                                      Long chatId,
-                                      @Nullable ImmutablePlan plan,
-                                      @Nullable ResultsSummary resultsSummary,
-                                      @Nullable DeploymentResult deploymentResult)
-    {
+                                         Long chatId,
+                                         @Nullable ImmutablePlan plan,
+                                         @Nullable ResultsSummary resultsSummary,
+                                         @Nullable DeploymentResult deploymentResult) {
         this.botToken = botToken;
         this.chatId = chatId;
         this.plan = plan;
@@ -47,8 +45,7 @@ public class TelegramNotificationTransport implements NotificationTransport
         this.deploymentResult = deploymentResult;
     }
 
-    public void sendNotification(@NotNull Notification notification)
-    {
+    public void sendNotification(@NotNull Notification notification) {
 
         String message = notification.getIMContent();
 
@@ -66,8 +63,7 @@ public class TelegramNotificationTransport implements NotificationTransport
 
                     ArrayList<String> usernames = new ArrayList<String>();
 
-                    for (Author author: authors)
-                    {
+                    for (Author author : authors) {
                         usernames.add(author.getFullName());
                     }
 

@@ -36,26 +36,21 @@ public class TelegramNotificationRecipient extends AbstractNotificationRecipient
     private DeploymentResult deploymentResult;
 
     @Override
-    public void populate(@NotNull Map<String, String[]> params)
-    {
-        if (params.containsKey(BOT_TOKEN))
-        {
+    public void populate(@NotNull Map<String, String[]> params) {
+        if (params.containsKey(BOT_TOKEN)) {
             int i = params.get(BOT_TOKEN).length - 1;
             this.botToken = params.get(BOT_TOKEN)[i];
         }
-        if (params.containsKey(CHAT_ID))
-        {
+        if (params.containsKey(CHAT_ID)) {
             int i = params.get(CHAT_ID).length - 1;
             this.chatId = Long.valueOf(params.get(CHAT_ID)[i]);
         }
     }
 
     @Override
-    public void init(@Nullable String configurationData)
-    {
+    public void init(@Nullable String configurationData) {
 
-        if (StringUtils.isNotBlank(configurationData))
-        {
+        if (StringUtils.isNotBlank(configurationData)) {
             String delimiter = "\\|";
 
             String[] configValues = configurationData.split(delimiter);
@@ -71,8 +66,7 @@ public class TelegramNotificationRecipient extends AbstractNotificationRecipient
 
     @NotNull
     @Override
-    public String getRecipientConfig()
-    {
+    public String getRecipientConfig() {
         // We can do this because webhook URLs don't have | in them, but it's pretty dodge. Better to JSONify or something?
         String delimiter = "|";
 
@@ -89,30 +83,25 @@ public class TelegramNotificationRecipient extends AbstractNotificationRecipient
 
     @NotNull
     @Override
-    public String getEditHtml()
-    {
-        String editTemplateLocation = ((NotificationRecipientModuleDescriptor)getModuleDescriptor()).getEditTemplate();
+    public String getEditHtml() {
+        String editTemplateLocation = ((NotificationRecipientModuleDescriptor) getModuleDescriptor()).getEditTemplate();
         return templateRenderer.render(editTemplateLocation, populateContext());
     }
 
     @NotNull
     @Override
-    public String getViewHtml()
-    {
-        String editTemplateLocation = ((NotificationRecipientModuleDescriptor)getModuleDescriptor()).getViewTemplate();
+    public String getViewHtml() {
+        String editTemplateLocation = ((NotificationRecipientModuleDescriptor) getModuleDescriptor()).getViewTemplate();
         return templateRenderer.render(editTemplateLocation, populateContext());
     }
 
-    private Map<String, Object> populateContext()
-    {
+    private Map<String, Object> populateContext() {
         Map<String, Object> context = Maps.newHashMap();
 
-        if (botToken != null)
-        {
+        if (botToken != null) {
             context.put(BOT_TOKEN, botToken);
         }
-        if (chatId != null)
-        {
+        if (chatId != null) {
             context.put(CHAT_ID, chatId);
         }
 
@@ -120,36 +109,30 @@ public class TelegramNotificationRecipient extends AbstractNotificationRecipient
     }
 
     @NotNull
-    public List<NotificationTransport> getTransports()
-    {
+    public List<NotificationTransport> getTransports() {
         List<NotificationTransport> list = Lists.newArrayList();
         list.add(new TelegramNotificationTransport(botToken, chatId, plan, resultsSummary, deploymentResult));
         return list;
     }
 
-    public void setPlan(@Nullable final Plan plan)
-    {
+    public void setPlan(@Nullable final Plan plan) {
         this.plan = plan;
     }
 
-    public void setPlan(@Nullable final ImmutablePlan plan)
-    {
+    public void setPlan(@Nullable final ImmutablePlan plan) {
         this.plan = plan;
     }
 
-    public void setDeploymentResult(@Nullable final DeploymentResult deploymentResult)
-    {
+    public void setDeploymentResult(@Nullable final DeploymentResult deploymentResult) {
         this.deploymentResult = deploymentResult;
     }
 
-    public void setResultsSummary(@Nullable final ResultsSummary resultsSummary)
-    {
+    public void setResultsSummary(@Nullable final ResultsSummary resultsSummary) {
         this.resultsSummary = resultsSummary;
     }
 
     //-----------------------------------Dependencies
-    public void setTemplateRenderer(TemplateRenderer templateRenderer)
-    {
+    public void setTemplateRenderer(TemplateRenderer templateRenderer) {
         this.templateRenderer = templateRenderer;
     }
 }
