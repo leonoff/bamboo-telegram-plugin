@@ -75,7 +75,7 @@ public class TelegramNotificationTransport implements NotificationTransport {
                 for (VariableSubstitution variable : variables) {
                     message.append(variable.getKey())
                             .append(": ")
-                            .append(variable.getValue())
+                            .append(variable.getKey().contains("password") ? "******" :variable.getValue())
                             .append(" \n");
                 }
             }
