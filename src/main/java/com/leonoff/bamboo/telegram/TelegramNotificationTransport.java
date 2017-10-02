@@ -7,6 +7,7 @@ import com.atlassian.bamboo.notification.Notification;
 import com.atlassian.bamboo.notification.NotificationTransport;
 import com.atlassian.bamboo.plan.cache.ImmutablePlan;
 import com.atlassian.bamboo.resultsummary.ResultsSummary;
+import com.atlassian.bamboo.variable.VariableSubstitution;
 import com.pengrad.telegrambot.TelegramBot;
 import com.pengrad.telegrambot.TelegramBotAdapter;
 import com.pengrad.telegrambot.model.request.ParseMode;
@@ -68,20 +69,38 @@ public class TelegramNotificationTransport implements NotificationTransport {
                         .append("\n");
             }
 
+            List<VariableSubstitution> variables = resultsSummary.getManuallyOverriddenVariables();
+            if (!variables.isEmpty()) {
+                message.append("Variables: \n");
+                for (VariableSubstitution variable : variables) {
+                    message.append(variable.getKey())
+                            .append(": ")
+                            .append(variable.getKey().contains("password") ? "******" :variable.getValue())
+                            .append(" \n");
+                }
+            }
+
             List<String> labels = resultsSummary.getLabelNames();
             if (!labels.isEmpty()) {
-                message.append(" Labels: ")
+                message.append("Labels: ")
                         .append(String.join(", ", labels))
                         .append("\n");
             }
 
-            Set<LinkedJiraIssue> jiraIssues = resultsSummary.getJiraIssues();
+            Set<LinkedJiraIssue> jiraIssues = resultsSummary.getRelatedJiraIssues();
             if (!jiraIssues.isEmpty()) {
-                message.append(" Issues: \n");
+                message.append("Issues: \n");
                 for (LinkedJiraIssue issue : jiraIssues) {
-                    message.append(issue.getIssueKey());
-                    if (issue.getJiraIssueDetails() != null) {
-                        message.append(" - ")
+
+                    if (issue.getJiraIssueDetails() == null) {
+                        message.append(issue.getIssueKey());
+                    } else {
+                        message.append("<a href=\"")
+                                .append(issue.getJiraIssueDetails().getDisplayUrl())
+                                .append("\">")
+                                .append(issue.getIssueKey())
+                                .append("</a>")
+                                .append(" - ")
                                 .append(issue.getJiraIssueDetails().getSummary());
                     }
                     message.append("\n");
