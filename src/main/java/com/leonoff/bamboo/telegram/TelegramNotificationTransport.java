@@ -69,7 +69,7 @@ public class TelegramNotificationTransport implements NotificationTransport {
                         .append("\n");
             }
 
-            List<VariableSubstitution> variables = resultsSummary.getSubstitutedVariables();
+            List<VariableSubstitution> variables = resultsSummary.getManuallyOverriddenVariables();
             if (!variables.isEmpty()) {
                 message.append("Variables: \n");
                 for (VariableSubstitution variable : variables) {
