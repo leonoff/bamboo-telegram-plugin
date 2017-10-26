@@ -7,6 +7,7 @@ import com.atlassian.bamboo.notification.Notification;
 import com.atlassian.bamboo.notification.NotificationTransport;
 import com.atlassian.bamboo.plan.cache.ImmutablePlan;
 import com.atlassian.bamboo.resultsummary.ResultsSummary;
+import com.atlassian.bamboo.variable.VariableDefinition;
 import com.atlassian.bamboo.variable.VariableSubstitution;
 import com.pengrad.telegrambot.TelegramBot;
 import com.pengrad.telegrambot.TelegramBotAdapter;
@@ -14,7 +15,6 @@ import com.pengrad.telegrambot.model.request.ParseMode;
 import com.pengrad.telegrambot.request.SendMessage;
 import com.pengrad.telegrambot.response.BaseResponse;
 
-import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.jetbrains.annotations.NotNull;
@@ -75,7 +75,7 @@ public class TelegramNotificationTransport implements NotificationTransport {
                 for (VariableSubstitution variable : variables) {
                     message.append(variable.getKey())
                             .append(": ")
-                            .append(variable.getKey().contains("password") ? "******" :variable.getValue())
+                            .append(variable.getKey().contains("password") ? "******" : variable.getValue())
                             .append(" \n");
                 }
             }

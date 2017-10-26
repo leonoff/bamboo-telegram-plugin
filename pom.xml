@@ -6,12 +6,12 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.leonoff.bamboo.plugins</groupId>
     <artifactId>bamboo-telegram-plugin</artifactId>
-    <version>1.1.0</version>
+    <version>1.1.1</version>
 
     <scm>
         <developerConnection>scm:git:git@github.com:leonoff/bamboo-telegram-plugin.git</developerConnection>
         <url>https://github.com/leonoff</url>
-        <tag>1.1.0</tag>
+        <tag>1.1.1</tag>
     </scm>
 
     <name>bamboo-telegram-plugin</name>
@@ -22,9 +22,9 @@
 
     <properties>
         <bamboo.version>6.1.1</bamboo.version>
-        <bamboo.data.version>6.1.1</bamboo.data.version>
-        <amps.version>6.2.6</amps.version>
-        <platform.version>3.0.4</platform.version>
+        <bamboo.data.version>${bamboo.version}</bamboo.data.version>
+        <amps.version>6.2.11</amps.version>
+        <platform.version>4.0.0</platform.version>
         <plugin.testrunner.version>1.2.3</plugin.testrunner.version>
         <atlassian.spring.scanner.version>1.2.13</atlassian.spring.scanner.version>
         <!-- This key is used to keep the consistency between the key in atlassian-plugin.xml and the key to generate bundle. -->
@@ -63,7 +63,6 @@
     </pluginRepositories>
 
     <dependencyManagement>
-
         <dependencies>
             <dependency>
                 <groupId>com.atlassian.platform</groupId>
