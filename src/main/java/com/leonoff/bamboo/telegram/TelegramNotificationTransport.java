@@ -2,6 +2,8 @@ package com.leonoff.bamboo.telegram;
 
 import com.atlassian.bamboo.author.Author;
 import com.atlassian.bamboo.deployments.results.DeploymentResult;
+import com.atlassian.bamboo.deployments.versions.DeploymentVersion;
+import com.atlassian.bamboo.deployments.versions.service.DeploymentVersionLinkedJiraIssuesService;
 import com.atlassian.bamboo.jira.jiraissues.LinkedJiraIssue;
 import com.atlassian.bamboo.notification.Notification;
 import com.atlassian.bamboo.notification.NotificationTransport;
@@ -54,56 +56,94 @@ public class TelegramNotificationTransport implements NotificationTransport {
         final StringBuilder message = new StringBuilder();
         String imContent = notification.getIMContent();
 
-        if (!StringUtils.isEmpty(imContent) && resultsSummary != null) {
-            if (resultsSummary.isSuccessful()) {
-                message.append("\uD83D\uDE00 \uD83D\uDC4C ");
-            } else {
-                message.append("\uD83D\uDE31 \uD83D\uDE45\u200D♂️ ");
-            }
-            message.append(imContent).append(resultsSummary.getReasonSummary()).append("\n");
+        if (!StringUtils.isEmpty(imContent) ) {
 
-            List<String> authorsNames = resultsSummary.getUniqueAuthors().stream().map(Author::getFullName).collect(Collectors.toList());
-            if (!authorsNames.isEmpty()) {
-                message.append(" Responsible Users: ")
-                        .append(String.join(", ", authorsNames))
-                        .append("\n");
-            }
+            if ( resultsSummary != null ) {
 
-            List<VariableSubstitution> variables = resultsSummary.getManuallyOverriddenVariables();
-            if (!variables.isEmpty()) {
-                message.append("Variables: \n");
-                for (VariableSubstitution variable : variables) {
-                    message.append(variable.getKey())
-                            .append(": ")
-                            .append(variable.getKey().contains("password") ? "******" : variable.getValue())
-                            .append(" \n");
+                if (resultsSummary.isSuccessful()) {
+                    message.append("\uD83D\uDE00 \uD83D\uDC4C ");
+                } else {
+                    message.append("\uD83D\uDE31 \uD83D\uDE45\u200D♂️ ");
+                }
+                message.append(imContent).append(resultsSummary.getReasonSummary()).append("\n");
+
+                List<String> authorsNames = resultsSummary.getUniqueAuthors().stream().map(Author::getFullName).collect(Collectors.toList());
+                if (!authorsNames.isEmpty()) {
+                    message.append(" Responsible Users: ")
+                            .append(String.join(", ", authorsNames))
+                            .append("\n");
+                }
+
+                List<VariableSubstitution> variables = resultsSummary.getManuallyOverriddenVariables();
+                if (!variables.isEmpty()) {
+                    message.append("Variables: \n");
+                    for (VariableSubstitution variable : variables) {
+                        message.append(variable.getKey())
+                                .append(": ")
+                                .append(variable.getKey().contains("password") ? "******" : variable.getValue())
+                                .append(" \n");
+                    }
+                }
+
+                List<String> labels = resultsSummary.getLabelNames();
+                if (!labels.isEmpty()) {
+                    message.append("Labels: ")
+                            .append(String.join(", ", labels))
+                            .append("\n");
+                }
+
+                Set<LinkedJiraIssue> jiraIssues = resultsSummary.getRelatedJiraIssues();
+                if (!jiraIssues.isEmpty()) {
+                    message.append("Issues: \n");
+                    for (LinkedJiraIssue issue : jiraIssues) {
+
+                        if (issue.getJiraIssueDetails() == null) {
+                            message.append(issue.getIssueKey());
+                        } else {
+                            message.append("<a href=\"")
+                                    .append(issue.getJiraIssueDetails().getDisplayUrl())
+                                    .append("\">")
+                                    .append(issue.getIssueKey())
+                                    .append("</a>")
+                                    .append(" - ")
+                                    .append(issue.getJiraIssueDetails().getSummary());
+                        }
+                        message.append("\n");
+                    }
                 }
             }
 
-            List<String> labels = resultsSummary.getLabelNames();
-            if (!labels.isEmpty()) {
-                message.append("Labels: ")
-                        .append(String.join(", ", labels))
-                        .append("\n");
-            }
+            if ( deploymentResult != null ) {
+                message.append("Deployment notification. \n Reason: ");
+                message.append(imContent).append(deploymentResult.getReasonSummary()).append("\n");
 
-            Set<LinkedJiraIssue> jiraIssues = resultsSummary.getRelatedJiraIssues();
-            if (!jiraIssues.isEmpty()) {
-                message.append("Issues: \n");
-                for (LinkedJiraIssue issue : jiraIssues) {
+                message.append("Deployed version name: ");
+                message.append(deploymentResult.getDeploymentVersionName()).append("\n");
 
-                    if (issue.getJiraIssueDetails() == null) {
-                        message.append(issue.getIssueKey());
-                    } else {
-                        message.append("<a href=\"")
-                                .append(issue.getJiraIssueDetails().getDisplayUrl())
-                                .append("\">")
-                                .append(issue.getIssueKey())
-                                .append("</a>")
-                                .append(" - ")
-                                .append(issue.getJiraIssueDetails().getSummary());
-                    }
-                    message.append("\n");
+                message.append("Environment deployed to: ");
+                message.append(deploymentResult.getEnvironment().getName()).append("\n");
+
+                message.append("Started at: ");
+                message.append(deploymentResult.getStartedDate()).append("\n");
+
+                if (deploymentResult.getFinishedDate() != null) {
+                    message.append("Finished at: ");
+                    message.append(deploymentResult.getFinishedDate()).append("\n");
+                }
+
+                if (deploymentResult.getDeploymentVersion() != null) {
+
+                    DeploymentVersion currentDeploymentVersion = deploymentResult.getDeploymentVersion();
+                    message.append("Version created by: ");
+                    message.append(currentDeploymentVersion.getCreatorDisplayName()).append("\n");
+
+                    /* Set<String> LinkedjiraIssues = currentDeploymentVersion.getJiraIssueKeysForDeploymentVersion();
+
+                   if (!LinkedjiraIssues.isEmpty()) {
+                        message.append(" Issues linked: ")
+                                .append(String.join(", ", LinkedjiraIssues))
+                                .append("\n");
+                    }*/
                 }
             }
         }

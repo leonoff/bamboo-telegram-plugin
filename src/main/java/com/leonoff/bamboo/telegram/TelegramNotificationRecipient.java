@@ -1,6 +1,7 @@
 package com.leonoff.bamboo.telegram;
 
 import com.atlassian.bamboo.deployments.results.DeploymentResult;
+import com.atlassian.bamboo.deployments.versions.DeploymentVersion;
 import com.atlassian.bamboo.notification.NotificationRecipient;
 import com.atlassian.bamboo.notification.NotificationTransport;
 import com.atlassian.bamboo.notification.recipients.AbstractNotificationRecipient;
@@ -34,6 +35,7 @@ public class TelegramNotificationRecipient extends AbstractNotificationRecipient
     private ImmutablePlan plan;
     private ResultsSummary resultsSummary;
     private DeploymentResult deploymentResult;
+
 
     @Override
     public void populate(@NotNull Map<String, String[]> params) {

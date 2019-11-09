@@ -6,12 +6,12 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.leonoff.bamboo.plugins</groupId>
     <artifactId>bamboo-telegram-plugin</artifactId>
-    <version>1.1.1</version>
+    <version>1.1.2</version>
 
     <scm>
         <developerConnection>scm:git:git@github.com:leonoff/bamboo-telegram-plugin.git</developerConnection>
         <url>https://github.com/leonoff</url>
-        <tag>1.1.1</tag>
+        <tag>1.1.2</tag>
     </scm>
 
     <name>bamboo-telegram-plugin</name>
