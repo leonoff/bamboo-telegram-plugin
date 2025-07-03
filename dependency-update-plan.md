@@ -1,163 +1,239 @@
-# Dependency Update Plan for Bamboo Telegram Plugin
+# Dependency Update Action Plan - Bamboo Telegram Plugin
 
 ## Project Overview
-- **Project**: Bamboo Telegram Plugin
 - **Repository**: leonoff/bamboo-telegram-plugin  
-- **Description**: A notification plugin for Atlassian Bamboo that sends notifications via Telegram
-- **Build System**: Maven (pom.xml)
-- **Current Status**: 3 open issues, 1 open pull request on GitHub
+- **Current Status**: 3 open GitHub issues, 1 open pull request
+- **Goal**: Update all dependencies, resolve security vulnerabilities, and address Dependabot alerts
 
-## Current Dependencies Analysis
+---
 
-### Dependencies Requiring Updates
+## Phase 1: Project Assessment & Setup
 
-Based on the current `pom.xml`, here are the key dependencies that likely need updates:
+### ✅ Task 1.1: Repository Analysis
+- [ ] Review all open GitHub issues 
+- [ ] Review the open pull request
+- [ ] Check if Dependabot is configured
+- [ ] Document current dependency versions
+- [ ] Identify which dependencies have security vulnerabilities
 
-#### 1. **JSON Library (org.json)**
-- **Current**: `20160810` (August 2016)
-- **Issue**: This is a very old version (8+ years old)
-- **Priority**: HIGH - Security and compatibility concerns
-- **Recommended Action**: Update to latest stable version `20250517` (May 2025)
+**Success Criteria**: Complete understanding of current state and issues
 
-#### 2. **Apache HttpClient**
-- **Current**: `4.5.1` 
-- **Issue**: Released in 2015, has known security vulnerabilities
-- **Priority**: HIGH - Critical security updates available
-- **Recommended Action**: Update to latest 4.5.x series (4.5.14) or migrate to 5.x series
+### ✅ Task 1.2: Development Environment Setup
+- [ ] Clone repository locally
+- [ ] Verify Maven build works with current dependencies
+- [ ] Run existing tests (if any)
+- [ ] Document current build process
 
-#### 3. **Telegram Bot API (com.github.pengrad)**
-- **Current**: `2.1.4`
-- **Issue**: Very old version, missing many Telegram Bot API features
-- **Priority**: MEDIUM - Feature and compatibility improvements
-- **Recommended Action**: Update to latest version (likely 6.x series)
+**Success Criteria**: Local development environment working with current codebase
 
-#### 4. **JUnit**
-- **Current**: `4.10` (from 2011)
-- **Issue**: Ancient testing framework version
-- **Priority**: MEDIUM - Better testing capabilities and security
-- **Recommended Action**: Update to JUnit 4.13.2 or migrate to JUnit 5
+### ✅ Task 1.3: Create Development Branch
+- [ ] Create feature branch: `feature/dependency-updates`
+- [ ] Push branch to origin
+- [ ] Set up local tracking
 
-#### 5. **Google Gson**
-- **Current**: `2.2.2-atlassian-1`
-- **Issue**: Old version with potential security issues
-- **Priority**: MEDIUM
-- **Recommended Action**: Update to latest 2.10.x series
+**Success Criteria**: Development branch ready for changes
 
-## Step-by-Step Update Plan
+---
 
-### Phase 1: Critical Security Updates (Week 1)
+## Phase 2: Critical Security Updates (Week 1)
 
-1. **Update Apache HttpClient**
-   ```xml
-   <dependency>
-       <groupId>org.apache.httpcomponents</groupId>
-       <artifactId>httpclient</artifactId>
-       <version>4.5.14</version>
-   </dependency>
-   ```
+### ✅ Task 2.1: Update Apache HttpClient (Priority: HIGH)
+- [ ] Update `httpclient` from `4.5.1` to `4.5.14` (or latest 4.x)
+- [ ] Update in `pom.xml`
+- [ ] Test compilation
+- [ ] Test HTTP functionality to Telegram API
+- [ ] Commit changes
 
-2. **Update JSON Library**
-   ```xml
-   <dependency>
-       <groupId>org.json</groupId>
-       <artifactId>json</artifactId>
-       <version>20231013</version>
-   </dependency>
-   ```
+**Current**: 
+```xml
+<version>4.5.1</version>
+```
+**Target**: 
+```xml
+<version>4.5.14</version>
+```
 
-3. **Test thoroughly** - Ensure all HTTP requests and JSON parsing still work
+**Success Criteria**: HTTP client updated, builds successfully, Telegram API calls work
 
-### Phase 2: Framework Updates (Week 2)
+### ✅ Task 2.2: Update JSON Library (Priority: HIGH)
+- [ ] Update `org.json` from `20160810` to `20250517`
+- [ ] Update in `pom.xml`
+- [ ] Test compilation
+- [ ] Test JSON parsing functionality
+- [ ] Commit changes
 
-1. **Update JUnit**
-   ```xml
-   <dependency>
-       <groupId>junit</groupId>
-       <artifactId>junit</artifactId>
-       <version>4.13.2</version>
-       <scope>test</scope>
-   </dependency>
-   ```
+**Current**: 
+```xml
+<version>20160810</version>
+```
+**Target**: 
+```xml
+<version>20250517</version>
+```
 
-2. **Update Telegram Bot API**
-   ```xml
-   <dependency>
-       <groupId>com.github.pengrad</groupId>
-       <artifactId>java-telegram-bot-api</artifactId>
-       <version>6.9.1</version>
-   </dependency>
-   ```
+**Success Criteria**: JSON library updated, builds successfully, JSON operations work
 
-3. **Update Gson (if needed)**
-   ```xml
-   <dependency>
-       <groupId>com.google.code.gson</groupId>
-       <artifactId>gson</artifactId>
-       <version>2.10.1</version>
-   </dependency>
-   ```
+### ✅ Task 2.3: Phase 2 Integration Testing
+- [ ] Run full build with both updates
+- [ ] Run any existing tests
+- [ ] Manual test: Plugin installation in Bamboo (if possible)
+- [ ] Manual test: Send test notification to Telegram
+- [ ] Document any issues found
 
-### Phase 3: Platform Updates (Week 3)
+**Success Criteria**: All critical security updates working together
 
-1. **Consider updating Bamboo version** (currently 6.1.1 from 2017)
-   - Check Atlassian compatibility matrix
-   - Test with newer Bamboo versions if possible
+---
 
-2. **Update AMPS version** (currently 6.2.11)
-   - Update to latest compatible version
+## Phase 3: Framework & Testing Updates (Week 2)
 
-## Potential Breaking Changes & Mitigation
+### ✅ Task 3.1: Update JUnit (Priority: MEDIUM)
+- [ ] Update `junit` from `4.10` to `4.13.2`
+- [ ] Update in `pom.xml`
+- [ ] Run existing tests
+- [ ] Fix any test failures
+- [ ] Commit changes
 
-### 1. Apache HttpClient 4.5.1 → 4.5.14
-- **Risk**: LOW - Mostly backward compatible
-- **Mitigation**: Test all HTTP requests to Telegram API
+**Current**: 
+```xml
+<version>4.10</version>
+```
+**Target**: 
+```xml
+<version>4.13.2</version>
+```
 
-### 2. JSON Library 20160810 → 20231013  
-- **Risk**: LOW-MEDIUM - API changes possible
-- **Mitigation**: Review JSON parsing code, update if needed
+**Success Criteria**: JUnit updated, all tests pass
 
-### 3. Telegram Bot API 2.1.4 → 6.x
-- **Risk**: MEDIUM-HIGH - Significant API changes
-- **Mitigation**: 
-  - Review Telegram API usage
-  - Update method calls if needed
-  - Test all Telegram integration features
+### ✅ Task 3.2: Update Telegram Bot API (Priority: MEDIUM)
+- [ ] Research latest `com.github.pengrad:java-telegram-bot-api` version
+- [ ] Update from `2.1.4` to latest (likely 7.x+)
+- [ ] Update in `pom.xml`
+- [ ] Fix any API breaking changes
+- [ ] Test Telegram integration
+- [ ] Commit changes
 
-### 4. JUnit 4.10 → 4.13.2
-- **Risk**: LOW - Mostly backward compatible
-- **Mitigation**: Run all tests, fix any deprecation warnings
+**Current**: 
+```xml
+<version>2.1.4</version>
+```
+**Target**: 
+```xml
+<version>[LATEST_VERSION]</version>
+```
 
-## Testing Strategy
+**Success Criteria**: Telegram API updated, integration works
 
-### 1. Automated Testing
-- Run existing test suite after each update
-- Add integration tests for Telegram API calls
-- Test with different message types and formats
+### ✅ Task 3.3: Update Google Gson (Priority: MEDIUM)
+- [ ] Update `gson` from `2.2.2-atlassian-1` to latest
+- [ ] Research if Atlassian-specific version is still needed
+- [ ] Update in `pom.xml`
+- [ ] Test JSON serialization/deserialization
+- [ ] Commit changes
 
-### 2. Manual Testing
-- Test plugin installation in Bamboo
-- Verify notification delivery to Telegram
-- Test different notification scenarios (build success/failure)
+**Success Criteria**: Gson updated, JSON operations work
 
-### 3. Compatibility Testing
-- Test with target Bamboo versions
-- Verify plugin packaging and deployment
+### ✅ Task 3.4: Phase 3 Integration Testing
+- [ ] Run full build with all updates
+- [ ] Run complete test suite
+- [ ] Test plugin functionality end-to-end
+- [ ] Document any issues
 
-## GitHub Issues & Pull Requests
+**Success Criteria**: All framework updates working together
 
-### Current Status
-- **3 Open Issues**: Need to review and categorize
-- **1 Open Pull Request**: Need to evaluate for integration
+---
 
-### Recommended Actions
-1. **Review open issues** - Categorize by type (bug, feature, dependency)
-2. **Address dependency-related issues** first
-3. **Evaluate open PR** - Check if it addresses dependency concerns
-4. **Create new issues** for each major dependency update
+## Phase 4: Platform & Build Updates (Week 3)
 
-## Dependabot Configuration
+### ✅ Task 4.1: Consider Bamboo Platform Update
+- [ ] Research latest compatible Bamboo version
+- [ ] Check Atlassian compatibility matrix
+- [ ] Evaluate impact of updating from `6.1.1`
+- [ ] **Decision**: Update or keep current version?
+- [ ] If updating: Update `bamboo.version` property
+- [ ] Test compatibility
 
-### Recommended `.github/dependabot.yml`
+**Success Criteria**: Decision made and implemented (if applicable)
+
+### ✅ Task 4.2: Update AMPS Version
+- [ ] Update `amps.version` from `6.2.11` to latest compatible
+- [ ] Update in `pom.xml`
+- [ ] Test plugin packaging
+- [ ] Verify plugin installation process
+- [ ] Commit changes
+
+**Success Criteria**: AMPS updated, plugin packaging works
+
+### ✅ Task 4.3: Update Maven Compiler Configuration
+- [ ] Verify Java version compatibility
+- [ ] Update Maven compiler plugin if needed
+- [ ] Ensure source/target versions are appropriate
+- [ ] Test compilation
+
+**Success Criteria**: Build configuration optimized
+
+---
+
+## Phase 5: Testing & Quality Assurance (Week 4)
+
+### ✅ Task 5.1: Comprehensive Testing
+- [ ] Run full test suite
+- [ ] Test plugin installation in Bamboo instance
+- [ ] Test notification scenarios:
+  - [ ] Build success notification
+  - [ ] Build failure notification  
+  - [ ] Build start notification (if supported)
+- [ ] Test with different Telegram chat types:
+  - [ ] Private chat
+  - [ ] Group chat
+  - [ ] Channel (if supported)
+- [ ] Performance testing (if applicable)
+
+**Success Criteria**: All functionality verified working
+
+### ✅ Task 5.2: Security Verification
+- [ ] Run dependency vulnerability scan
+- [ ] Verify all Dependabot alerts are resolved
+- [ ] Check for any new security advisories
+- [ ] Document security improvements
+
+**Success Criteria**: No known security vulnerabilities
+
+### ✅ Task 5.3: Documentation Updates
+- [ ] Update README.md with new requirements (if any)
+- [ ] Update installation instructions (if changed)
+- [ ] Create CHANGELOG.md entry
+- [ ] Update version in `pom.xml` (increment appropriately)
+
+**Success Criteria**: Documentation reflects all changes
+
+---
+
+## Phase 6: Release Preparation & Deployment
+
+### ✅ Task 6.1: Final Build Verification
+- [ ] Clean build from scratch
+- [ ] Verify all tests pass
+- [ ] Check plugin artifact is correctly generated
+- [ ] Verify no dependency conflicts
+
+**Success Criteria**: Clean, reproducible build
+
+### ✅ Task 6.2: Create Pull Request
+- [ ] Push all changes to feature branch
+- [ ] Create pull request with detailed description
+- [ ] Include before/after dependency versions
+- [ ] Include testing summary
+- [ ] Request review from repository maintainer
+
+**Success Criteria**: Pull request created and ready for review
+
+### ✅ Task 6.3: Set Up Dependabot (Optional)
+- [ ] Create `.github/dependabot.yml` configuration
+- [ ] Configure monthly dependency checks
+- [ ] Set up auto-merge for patch updates (if desired)
+- [ ] Test Dependabot configuration
+
+**Configuration**:
 ```yaml
 version: 2
 updates:
@@ -166,52 +242,69 @@ updates:
     schedule:
       interval: "monthly"
     open-pull-requests-limit: 5
-    reviewers:
-      - "leonoff"
-    assignees:
-      - "leonoff"
 ```
 
-## Risk Assessment
+**Success Criteria**: Dependabot configured for future updates
 
-### High Risk
-- Very old dependencies with known security vulnerabilities
-- Potential API breaking changes in Telegram Bot library
+---
 
-### Medium Risk  
-- Plugin compatibility with newer Bamboo versions
-- Integration testing complexity
+## Emergency Rollback Plan
 
-### Low Risk
-- Build system compatibility
-- Minor version updates
+### ✅ Task R.1: Rollback Procedure (if needed)
+- [ ] Revert to previous commit on feature branch
+- [ ] Alternative: Cherry-pick individual updates to isolate issues
+- [ ] Test reverted version
+- [ ] Document what caused the need for rollback
 
-## Timeline
+**Success Criteria**: Working version restored
 
-- **Week 1**: Critical security updates (HttpClient, JSON)
-- **Week 2**: Framework updates (JUnit, Telegram API)  
-- **Week 3**: Platform updates and comprehensive testing
-- **Week 4**: Documentation updates and release preparation
+---
 
-## Success Criteria
+## Success Metrics
 
-1. All dependencies updated to latest stable versions
-2. All existing functionality preserved
-3. Security vulnerabilities addressed
-4. Comprehensive test coverage maintained
-5. Documentation updated
-6. Clean Dependabot status
+- [ ] **Security**: All Dependabot alerts resolved
+- [ ] **Functionality**: All existing features work
+- [ ] **Build**: Clean build with no warnings
+- [ ] **Tests**: All tests pass
+- [ ] **Documentation**: Updated and accurate
+- [ ] **Performance**: No degradation in plugin performance
 
-## Next Steps
+---
 
-1. **Immediate**: Start with Phase 1 (security updates)
-2. **Create GitHub issues** for each major dependency update
-3. **Set up branch protection** to require PR reviews
-4. **Configure Dependabot** for automated future updates
-5. **Document breaking changes** in CHANGELOG.md
+## Notes & Progress Log
 
-## Notes
-- Consider creating a dedicated branch for dependency updates
-- Test each update incrementally rather than all at once
-- Keep backup of working version before major updates
-- Consider setting up CI/CD pipeline for automated testing
+### Week 1 Progress:
+- [ ] Started: ___________
+- [ ] Completed: ___________
+- [ ] Issues encountered: ___________
+
+### Week 2 Progress:
+- [ ] Started: ___________
+- [ ] Completed: ___________
+- [ ] Issues encountered: ___________
+
+### Week 3 Progress:
+- [ ] Started: ___________
+- [ ] Completed: ___________
+- [ ] Issues encountered: ___________
+
+### Week 4 Progress:
+- [ ] Started: ___________
+- [ ] Completed: ___________
+- [ ] Issues encountered: ___________
+
+---
+
+## Dependency Version Summary
+
+| Dependency | Current Version | Target Version | Status |
+|-----------|----------------|----------------|---------|
+| org.json | 20160810 | 20250517 | ⏳ Pending |
+| httpclient | 4.5.1 | 4.5.14 | ⏳ Pending |
+| junit | 4.10 | 4.13.2 | ⏳ Pending |
+| java-telegram-bot-api | 2.1.4 | TBD | ⏳ Pending |
+| gson | 2.2.2-atlassian-1 | TBD | ⏳ Pending |
+| bamboo.version | 6.1.1 | TBD | ⏳ Pending |
+| amps.version | 6.2.11 | TBD | ⏳ Pending |
+
+**Legend**: ✅ Done | ⏳ Pending | ❌ Failed | ⚠️ Blocked
