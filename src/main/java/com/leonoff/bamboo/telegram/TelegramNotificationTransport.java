@@ -10,7 +10,6 @@ import com.atlassian.bamboo.resultsummary.ResultsSummary;
 import com.atlassian.bamboo.variable.VariableDefinition;
 import com.atlassian.bamboo.variable.VariableSubstitution;
 import com.pengrad.telegrambot.TelegramBot;
-import com.pengrad.telegrambot.TelegramBotAdapter;
 import com.pengrad.telegrambot.model.request.ParseMode;
 import com.pengrad.telegrambot.request.SendMessage;
 import com.pengrad.telegrambot.response.BaseResponse;
@@ -109,7 +108,7 @@ public class TelegramNotificationTransport implements NotificationTransport {
         }
 
         try {
-            TelegramBot bot = TelegramBotAdapter.build(botToken);
+            TelegramBot bot = new TelegramBot(botToken);
             SendMessage request = new SendMessage(chatId, message.toString())
                     .parseMode(ParseMode.HTML);
             BaseResponse response = bot.execute(request);
